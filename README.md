@@ -170,11 +170,11 @@ for (var i = 0; i < surfaces.length; i++) {
 회전해야 하는 9개의 cubies를 `#rotating`(CSS에서 사용하는 표현) 엘리먼트의 자식(child) 노드로 이동시키고 애니메이션을 시작하면 모두가 다 함께 회전하게 된다.
 그리고 애니메이션이 끝났을 때 9개의 cubies를 원래의 위치로 옮기는 것을 잊지 말자.
 
-```javascript
+```html
 <div id="rotating"></div>
 ```
 
-아래 코드는 `#rotating` 엘리먼트의 스타일과 6가지 방향으로 회전하는 애니메이션에 대한 keyframes이다.
+아래 코드는 `#rotating` 엘리먼트의 스타일과 6가지 방향으로 회전하는 애니메이션에 대한 `keyframes`이다.
 애니메이션을 적용할 때 적당한 `animation-name`을 지정하면 된다.
 
 ```css
