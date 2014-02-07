@@ -142,3 +142,95 @@ addEvent(container, "mouseup", containerMouseUp);
 </div>
 ```
 
+### 큐브 한 면 회전하기 ###
+
+사용자와의 새로운 인터페이스로 cubie 위에 마우스를 드래그했을 때, 큐브의 한 면을 회전시키는 것에 대해서 알아보자.
+마우스 이벤트를 추가하는 것은 마지막에 하도록 하고 이번에는 버튼을 눌렀을 때 6가지 방향으로 회전하는 애니메이션을 추가하는 것이 목표다.
+
+회전하는 방법에 대해서 알아보기에 앞서 각 면들마다 초기 색상을 칠하는 것은 아래 코드로 간단히 끝낼 수 있다.
+아래와 같이 간단히 각 면들에 색을 지정할 수 있기 위해서 미리 `data-surface`를 지정해 둔 것이다.
+물론, 나중에도 이 값을 이용하는 코드가 있기는 하다.
+
+```javascript
+// 큐브의 초기 면(surface) 색상
+var initColors = {
+  front: "white", left: "green", back: "yellow", right: "blue", down: "red", up: "orange"
+};
+
+var surfaces = document.getElementsByClassName("surface");
+for (var i = 0; i < surfaces.length; i++) {
+  css(surfaces[i], {
+    backgroundColor: initColors[surfaces[i].dataset.surface]
+  });
+}
+```
+
+이제부터는 큐브의 한 면을 회전하는 `animation`을 추가해 보자.
+여러 가지 방법이 있을 수 있겠지만, 나는 `rotating`이라는 아이디(ID)를 가진 `DIV` 엘리먼트를 `control` 영역 안에 추가하고, 이 엘리먼트를 회전시킬 것이다.
+회전해야 하는 9개의 cubies를 `#rotating`(CSS에서 사용하는 표현) 엘리먼트의 자식(child) 노드로 이동시키고 애니메이션을 시작하면 모두가 다 함께 회전하게 된다.
+그리고 애니메이션이 끝났을 때 9개의 cubies를 원래의 위치로 옮기는 것을 잊지 말자.
+
+```javascript
+<div id="rotating"></div>
+```
+
+아래 코드는 `#rotating` 엘리먼트의 스타일과 6가지 방향으로 회전하는 애니메이션에 대한 keyframes이다.
+애니메이션을 적용할 때 적당한 `animation-name`을 지정하면 된다.
+
+```css
+#rotating {
+  transform-style: preserve-3d;
+  transform-origin: 152px 152px;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+}
+
+@keyframes XCW {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-90deg); }
+}
+@keyframes YCW {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-90deg); }
+}
+@keyframes ZCW {
+  0% { transform: rotateZ(0deg); }
+  100% { transform: rotateZ(-90deg); }
+}
+@keyframes XCCW {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(90deg); }
+}
+@keyframes YCCW {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(90deg); }
+}
+@keyframes ZCCW {
+  0% { transform: rotateZ(0deg); }
+  100% { transform: rotateZ(90deg); }
+}
+```
+
+### 큐브의 색 바꾸기 ###
+
+큐브의 한 면을 회전하는 애니메이션이 끝난 후에 그에 맞춰 각 면의 색을 바꿈으로써 실제 회전이 완료된 듯이 보이도록 한다.
+
+어느 cubie가 어떤 방향(clockwise, counter clockwise)으로 회전을 했는지에 따라 변경해야 할 원본과 대상에 대한 정보를 아래와 같이 미리 정의해 둔다.
+
+```javascript
+var rotateCCW = {
+  "00":"20", "01":"10", "02":"00", "10":"21", "11":"11", "12":"01", "20":"22", "21":"12", "22":"02"
+};
+var rotateCW = {
+  "00":"02", "01":"12", "02":"22", "10":"01", "11":"11", "12":"21", "20":"00", "21":"10", "22":"20"
+};
+
+var surfaceXCW  = { left: "left", right: "right", up: "back", back: "down", down: "front", front: "up" };
+var surfaceXCCW = { left: "left", right: "right", up: "front", front: "down", down: "back", back: "up" };
+var surfaceYCW  = { up: "up", down: "down", left: "front", front: "right", right: "back", back: "left" };
+var surfaceYCCW = { up: "up", down: "down", left: "back", back: "right", right: "front", front: "left" };
+var surfaceZCW  = { front: "front", back: "back", left: "up", up: "right", right: "down", down: "left" };
+var surfaceZCCW = { front: "front", back: "back", left: "down", down: "right", right: "up", up: "left" };
+```
+
+> 마우스 이벤트에 따라 임의의 대상 cubie가 어느 방향으로 회전해야 하는지에 대해서는 설명을 하기보다는 소스 코드를 직접 분석해 보는 것이 더 쉽지 않을까 해서 생략한다.
