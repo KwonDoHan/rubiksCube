@@ -1,0 +1,134 @@
+<html>
+<head>
+	<title>Rubik's Cube</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, minimum-scale=0.4, user-scalable=no, target-densitydpi=device-dpi" />
+	<link rel="stylesheet" href="rubikscube.css" />
+
+	<script type="text/javascript" src="projstech.min.js"></script>
+	<script type="text/javascript" src="prefixfree.js"></script>
+	<script type="text/javascript" src="rubikscube.min.js"></script>
+</head>
+<body>
+	<div id="container">
+		<span class="message">큐브 전체를 회전하려면 현재 영역(큐브 바깥)에서 드래그(drag)하십시오.</span>
+		<span class="info">
+			Safari, Chrome in iPhone4 / iPad2<br />
+			Safari 6.0, Chrome 26.0, Firefox 20.0 in OSX 10.8
+		</span>
+
+		<div id="control">
+			<div id="rotating"></div>
+			<div id="c111" class="cubie" data-x="1" data-y="1" data-z="1">
+			</div>
+			<div id="c101" class="cubie" data-x="0" data-y="1" data-z="1">
+				<span class="surface" data-surface="left"></span>
+			</div>
+			<div id="c112" class="cubie" data-x="1" data-y="2" data-z="1">
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c121" class="cubie" data-x="2" data-y="1" data-z="1">
+				<span class="surface" data-surface="right"></span>
+			</div>
+			<div id="c110" class="cubie" data-x="1" data-y="0" data-z="1">
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c011" class="cubie" data-x="1" data-y="1" data-z="0">
+				<span class="surface" data-surface="front"></span>
+			</div>
+			<div id="c211" class="cubie" data-x="1" data-y="1" data-z="2">
+				<span class="surface" data-surface="back"></span>
+			</div>
+			<div id="c021" class="cubie" data-x="2" data-y="1" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="right"></span>
+			</div>
+			<div id="c201" class="cubie" data-x="0" data-y="1" data-z="2">
+				<span class="surface" data-surface="back"></span>
+				<span class="surface" data-surface="left"></span>
+			</div>
+			<div id="c221" class="cubie" data-x="2" data-y="1" data-z="2">
+				<span class="surface" data-surface="right"></span>
+				<span class="surface" data-surface="back"></span>
+			</div>
+			<div id="c012" class="cubie" data-x="1" data-y="2" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c212" class="cubie" data-x="1" data-y="2" data-z="2">
+				<span class="surface" data-surface="back"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c210" class="cubie" data-x="1" data-y="0" data-z="2">
+				<span class="surface" data-surface="back"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c010" class="cubie" data-x="1" data-y="0" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c120" class="cubie" data-x="2" data-y="0" data-z="1">
+				<span class="surface" data-surface="right"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c122" class="cubie" data-x="2" data-y="2" data-z="1">
+				<span class="surface" data-surface="right"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c102" class="cubie" data-x="0" data-y="2" data-z="1">
+				<span class="surface" data-surface="left"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c100" class="cubie" data-x="0" data-y="0" data-z="1">
+				<span class="surface" data-surface="left"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c002" class="cubie" data-x="0" data-y="2" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="left"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c022" class="cubie" data-x="2" data-y="2" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="right"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c202" class="cubie" data-x="0" data-y="2" data-z="2">
+				<span class="surface" data-surface="back"></span>
+				<span class="surface" data-surface="left"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c222" class="cubie" data-x="2" data-y="2" data-z="2">
+				<span class="surface" data-surface="right"></span>
+				<span class="surface" data-surface="back"></span>
+				<span class="surface" data-surface="up"></span>
+			</div>
+			<div id="c220" class="cubie" data-x="2" data-y="0" data-z="2">
+				<span class="surface" data-surface="right"></span>
+				<span class="surface" data-surface="back"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c200" class="cubie" data-x="0" data-y="0" data-z="2">
+				<span class="surface" data-surface="back"></span>
+				<span class="surface" data-surface="left"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c000" class="cubie" data-x="0" data-y="0" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="left"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c020" class="cubie" data-x="2" data-y="0" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="right"></span>
+				<span class="surface" data-surface="down"></span>
+			</div>
+			<div id="c001" class="cubie" data-x="0" data-y="1" data-z="0">
+				<span class="surface" data-surface="front"></span>
+				<span class="surface" data-surface="left"></span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
