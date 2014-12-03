@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+  <title>Rubik's Cube Ex03</title>
+  <link rel="stylesheet" href="/javascript/rubiksCube/ex03.css" />
+  <style type="text/css">
+  #rotating {
+    transform-style: preserve-3d;
+    transform-origin: 152px 152px;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+  }
+
+  @keyframes XCW {
+    0% { transform: rotateX(0deg); }
+    100% { transform: rotateX(-90deg); }
+  }
+  @keyframes YCW {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(-90deg); }
+  }
+  @keyframes ZCW {
+    0% { transform: rotateZ(0deg); }
+    100% { transform: rotateZ(-90deg); }
+  }
+  @keyframes XCCW {
+    0% { transform: rotateX(0deg); }
+    100% { transform: rotateX(90deg); }
+  }
+  @keyframes YCCW {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(90deg); }
+  }
+  @keyframes ZCCW {
+    0% { transform: rotateZ(0deg); }
+    100% { transform: rotateZ(90deg); }
+  }
+
+  #c002 > .surface { border: 5px solid red; z-index: 100; }
+
+  #buttons {
+    line-height: 3.5em;
+    position: absolute;
+    top: 5px;
+    left: 620px;
+    width: 300px;
+  }
+  button {
+    transform-origin: 0% 0% 0;
+    transform: scale(2.0);
+  }
+  </style>
+  <script type="text/javascript" src="/js/prefixfree.min.js"></script>
+  <script type="text/javascript" src="/js/projstech.min.js"></script>
+  <script type="text/javascript">
+  domReady(function () {
+    "use strict";
+
+    var control = document.getElementById("control");
+
+    // 큐브의 초기 회전 값 지정
+    css(control, {
+      transform: "rotateX(-30deg) rotateY(40deg)"
+    });
+
+    // 큐브의 초기 면(surface) 색상
+    var initColors = {
+      front: "white", left: "green", back: "yellow", right: "blue", down: "red", up: "orange"
+    };
+
+    var surfaces = document.getElementsByClassName("surface");
+    for (var i = 0; i < surfaces.length; i++) {
+      css(surfaces[i], {
+        backgroundColor: initColors[surfaces[i].dataset.surface]
+      });
+    }
+
+    //
+    //
+    //
+    var cubieElements = document.getElementsByClassName("cubie");
+    var rotatingPane = document.getElementById("rotating");
+    var targetCubies = [];
+    var rotatingDir = "";
+    
+    // elem 엘리먼트가 포함된 큐브의 한 면을 direction 방향으로 duration 시간동안 회전한다.
+    function rotateCubies (elem, direction, duration) {
+      direction = direction || rotatingDir;
+      duration = duration || 0.2;
+
+      if (direction == "") return;
+
+      rotatingDir = direction;
+      var dirAxis = direction.charAt(0).toUpperCase();
+
+      // 회전하려는 대상 cubie elements를 확인한다.
+      targetCubies = [];
+      for (var i = 0; i < cubieElements.length; i++) {
+        switch (dirAxis) {
+          case "X":
+            if ( cubieElements[i].dataset.x == elem.dataset.x )
+              targetCubies.push(cubieElements[i]);
+            break;
+          case "Y":
+            if ( cubieElements[i].dataset.y == elem.dataset.y )
+              targetCubies.push(cubieElements[i]);
+            break;
+          case "Z":
+            if ( cubieElements[i].dataset.z == elem.dataset.z )
+              targetCubies.push(cubieElements[i]);
+            break;
+        }
+      }
+      prepareRotatingPane(targetCubies);
+
+      css(rotatingPane, { animationName: direction, animationDuration: duration + "s" });      
+    }
+
+    // 애니메이션이 끝난 다음에 처리해야 할 내용에 대해서 이벤트를 걸어둔다.
+    addEvent(rotatingPane, "AnimationEnd", function() {
+        css(this, { animationName : "" });
+        emptyRotatingPane();
+
+        rotatingDir = "";
+        targetCubies = [];
+    });
+
+    function prepareRotatingPane (elems) {
+      elems = elems || targetCubies;
+
+      for (var i = 0; i < elems.length; i++) {
+        elems[i].parentNode.removeChild(elems[i]);
+        rotatingPane.appendChild(elems[i]);
+      }
+    }
+
+    function emptyRotatingPane() {
+      while (rotatingPane.firstChild) {
+        var elem = rotatingPane.firstChild;
+        rotatingPane.removeChild(elem);
+        rotatingPane.parentNode.appendChild(elem);
+      }
+    }
+
+    //
+    // 큐브의 한 면 회전 테스트 버튼 이벤트
+    // 
+    var exCubie = document.getElementById("c002");
+    var buttons = document.getElementsByTagName("button");
+
+    for (var i = 0; i < buttons.length; i++) {
+      addEvent(buttons[i], "click", function(evt) { rotateCubies(exCubie, evt.target.id.toUpperCase(), 0.5); });
+    }
+  });
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div id="control">
+      <div id="rotating"></div>
+      <div id="c111" class="cubie" data-x="1" data-y="1" data-z="1">
+      </div>
+      <div id="c101" class="cubie" data-x="0" data-y="1" data-z="1">
+        <span class="surface" data-surface="left"></span>
+      </div>
+      <div id="c112" class="cubie" data-x="1" data-y="2" data-z="1">
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c121" class="cubie" data-x="2" data-y="1" data-z="1">
+        <span class="surface" data-surface="right"></span>
+      </div>
+      <div id="c110" class="cubie" data-x="1" data-y="0" data-z="1">
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c011" class="cubie" data-x="1" data-y="1" data-z="0">
+        <span class="surface" data-surface="front"></span>
+      </div>
+      <div id="c211" class="cubie" data-x="1" data-y="1" data-z="2">
+        <span class="surface" data-surface="back"></span>
+      </div>
+      <div id="c021" class="cubie" data-x="2" data-y="1" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="right"></span>
+      </div>
+      <div id="c201" class="cubie" data-x="0" data-y="1" data-z="2">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="left"></span>
+      </div>
+      <div id="c221" class="cubie" data-x="2" data-y="1" data-z="2">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="back"></span>
+      </div>
+      <div id="c012" class="cubie" data-x="1" data-y="2" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c212" class="cubie" data-x="1" data-y="2" data-z="2">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c210" class="cubie" data-x="1" data-y="0" data-z="2">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c010" class="cubie" data-x="1" data-y="0" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c120" class="cubie" data-x="2" data-y="0" data-z="1">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c122" class="cubie" data-x="2" data-y="2" data-z="1">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c102" class="cubie" data-x="0" data-y="2" data-z="1">
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c100" class="cubie" data-x="0" data-y="0" data-z="1">
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c002" class="cubie" data-x="0" data-y="2" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c022" class="cubie" data-x="2" data-y="2" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c202" class="cubie" data-x="0" data-y="2" data-z="2">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c222" class="cubie" data-x="2" data-y="2" data-z="2">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c220" class="cubie" data-x="2" data-y="0" data-z="2">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c200" class="cubie" data-x="0" data-y="0" data-z="2">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c000" class="cubie" data-x="0" data-y="0" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c020" class="cubie" data-x="2" data-y="0" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c001" class="cubie" data-x="0" data-y="1" data-z="0">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="left"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="buttons">
+    <button id="xcw">X clockwise</button><br />
+    <button id="xccw">X count clockwise</button><br />
+    <button id="ycw">Y clockwise</button><br />
+    <button id="yccw">Y count clockwise</button><br />
+    <button id="zcw">Z clockwise</button><br />
+    <button id="zccw">Z count clockwise</button>
+  </div>
+</body>
+</html>

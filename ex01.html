@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+  <title>Rubik's Cube Ex01</title>
+  <style type="text/css">
+  body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    transform-origin: 0% 0% 0;
+    transform: scale(0.5);
+  }
+  #container {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    width: 600px;
+    height: 600px;
+    border: 2px solid rgba(200, 200, 200, 0.9);
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px rgba(50, 50, 50, 0.5);
+    perspective-origin: 300px 300px;
+    perspective: 1000px;
+  }
+  #control {
+    position: inherit;
+    width: 300px;
+    height: 300px;
+    top: 150px;
+    left: 150px;
+    border: 2px solid rgba(50, 50, 250, 0.9);
+    background-color: rgba(50, 50, 250, 0.5);
+    transform-style: preserve-3d;
+  }
+  </style>
+  <script type="text/javascript" src="/js/prefixfree.min.js"></script>
+  <script type="text/javascript" src="/js/projstech.min.js"></script>
+  <script type="text/javascript">
+  domReady(function () {
+    var container = document.getElementById("container");
+    var control = document.getElementById("control");
+
+    var ctrlRotating = false;
+    var sx = 0, sy = 0;
+    var rx = 0, ry = 0;
+
+    function containerMouseDown (evt) {
+      evt.preventDefault();
+
+      ctrlRotating = true;
+
+      sx = evt.pageX;
+      sy = evt.pageY;
+    }
+
+    function containerMouseMove (evt) {
+      if (ctrlRotating) {
+        evt.preventDefault();
+
+        rx += -1 * (sx - evt.pageX);
+        ry += (sy - evt.pageY);
+
+        sx = evt.pageX;
+        sy = evt.pageY;
+
+        rotateControl(ry, rx);
+      }
+    }
+
+    function rotateControl (xdeg, ydeg) {
+      rx = ydeg, ry = xdeg;
+
+      css(control, {
+        transform: "rotateX(" + xdeg + "deg) rotateY(" + ydeg + "deg)"
+      });
+    }
+
+    function containerMouseUp (evt) {
+      evt.preventDefault();
+
+      ctrlRotating = false;
+    }
+
+    addEvent(container, "mousedown", containerMouseDown);
+    addEvent(container, "mousemove", containerMouseMove);
+    addEvent(container, "mouseup", containerMouseUp);
+  });
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div id="control">
+    </div>
+  </div>
+</body>
+</html>

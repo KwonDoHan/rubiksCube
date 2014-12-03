@@ -1,0 +1,96 @@
+body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  transform-origin: 0% 0% 0;
+  transform: scale(0.5);
+}
+
+#container {
+  position: relative;
+  top: 5px;
+  left: 5px;
+  width: 600px;
+  height: 600px;
+  border: 2px solid rgba(200, 200, 200, 0.9);
+  border-radius: 20px;
+  box-shadow: 0px 0px 4px rgba(50, 50, 50, 0.5);
+  perspective-origin: 305px 305px;
+  perspective: 1000px;
+}
+
+#control {
+  position: inherit;
+  width: 300px;
+  height: 300px;
+  top: 150px;
+  left: 150px;
+  transform-style: preserve-3d;
+}
+
+.surface {
+  width: 95px; height: 95px;
+  position: absolute;
+
+  border: 5px solid rgba(20, 20, 20, 0.9);
+  border-radius: 12px;
+
+  opacity: 0.95;
+}
+
+#c101 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(   0px,  100px,   50px); }
+#c112 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 100px,    0px,  -50px); }
+#c121 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(   0px,  100px,  250px); }
+#c110 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 100px,    0px, -250px); }
+#c011 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 100px,  100px,  150px); }
+#c211 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-100px,  100px,  150px); }
+
+#c021 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 200px,  100px,  150px); }
+#c021 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(-100px,  100px,  250px); }
+#c001 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d(   0px,  100px,  150px); }
+#c001 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d( 100px,  100px,   50px); }
+#c201 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(   0px,  100px,  150px); }
+#c201 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(-100px,  100px,   50px); }
+#c221 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d( 100px,  100px,  250px); }
+#c221 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-200px,  100px,  150px); }
+#c012 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 100px,    0px,  150px); }
+#c012 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 100px, -100px,  -50px); }
+#c212 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-100px,    0px,  150px); }
+#c212 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 100px,  100px,  -50px); }
+#c210 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-100px,  200px,  150px); }
+#c210 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 100px, -100px, -250px); }
+#c010 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 100px,  200px,  150px); }
+#c010 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 100px,  100px, -250px); }
+#c120 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(   0px,  200px,  250px); }
+#c120 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 200px,    0px, -250px); }
+#c122 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(   0px,    0px,  250px); }
+#c122 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 200px,    0px,  -50px); }
+#c102 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(   0px,    0px,   50px); }
+#c102 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d(   0px,    0px,  -50px); }
+#c100 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(   0px,  200px,   50px); }
+#c100 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d(   0px,    0px, -250px); }
+
+#c002 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d(   0px,    0px,  150px); }
+#c002 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d( 100px,    0px,   50px); }
+#c002 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d(   0px, -100px,  -50px); }
+#c022 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 200px,    0px,  150px); }
+#c022 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(-100px,    0px,  250px); }
+#c022 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 200px, -100px,  -50px); }
+#c020 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 200px,  200px,  150px); }
+#c020 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(-100px,  200px,  250px); }
+#c020 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 200px,  100px, -250px); }
+#c000 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d(   0px,  200px,  150px); }
+#c000 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d( 100px,  200px,   50px); }
+#c000 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d(   0px,  100px, -250px); }
+#c202 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(   0px,    0px,  150px); }
+#c202 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(-100px,    0px,   50px); }
+#c202 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d(   0px,  100px,  -50px); }
+#c222 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d( 100px,    0px,  250px); }
+#c222 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-200px,    0px,  150px); }
+#c222 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 200px,  100px,  -50px); }
+#c220 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d( 100px,  200px,  250px); }
+#c220 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-200px,  200px,  150px); }
+#c220 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 200px, -100px, -250px); }
+#c200 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(   0px,  200px,  150px); }
+#c200 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(-100px,  200px,   50px); }
+#c200 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d(   0px, -100px, -250px); }

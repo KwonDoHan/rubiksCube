@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+  <title>Rubik's Cube Ex02</title>
+  <link rel="stylesheet" href="/javascript/rubiksCube/ex02.css" />
+  <style type="text/css">
+  .surface {
+    width: 95px; height: 95px;
+    position: absolute;
+
+    border: 5px solid rgba(20, 20, 20, 0.9);
+    border-radius: 12px;
+
+    opacity: 0.95;
+  }
+
+  #c101 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(   0px,  100px,   50px); }
+  #c112 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 100px,    0px,  -50px); }
+  #c121 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(   0px,  100px,  250px); }
+  #c110 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 100px,    0px, -250px); }
+  #c011 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 100px,  100px,  150px); }
+  #c211 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-100px,  100px,  150px); }
+
+  #c021 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 200px,  100px,  150px); }
+  #c021 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(-100px,  100px,  250px); }
+  #c001 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d(   0px,  100px,  150px); }
+  #c001 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d( 100px,  100px,   50px); }
+  #c201 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(   0px,  100px,  150px); }
+  #c201 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(-100px,  100px,   50px); }
+  #c221 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d( 100px,  100px,  250px); }
+  #c221 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-200px,  100px,  150px); }
+  #c012 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 100px,    0px,  150px); }
+  #c012 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 100px, -100px,  -50px); }
+  #c212 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-100px,    0px,  150px); }
+  #c212 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 100px,  100px,  -50px); }
+  #c210 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-100px,  200px,  150px); }
+  #c210 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 100px, -100px, -250px); }
+  #c010 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 100px,  200px,  150px); }
+  #c010 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 100px,  100px, -250px); }
+  #c120 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(   0px,  200px,  250px); }
+  #c120 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 200px,    0px, -250px); }
+  #c122 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(   0px,    0px,  250px); }
+  #c122 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 200px,    0px,  -50px); }
+  #c102 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(   0px,    0px,   50px); }
+  #c102 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d(   0px,    0px,  -50px); }
+  #c100 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(   0px,  200px,   50px); }
+  #c100 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d(   0px,    0px, -250px); }
+
+  #c002 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d(   0px,    0px,  150px); }
+  #c002 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d( 100px,    0px,   50px); }
+  #c002 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d(   0px, -100px,  -50px); }
+  #c022 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 200px,    0px,  150px); }
+  #c022 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(-100px,    0px,  250px); }
+  #c022 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 200px, -100px,  -50px); }
+  #c020 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d( 200px,  200px,  150px); }
+  #c020 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d(-100px,  200px,  250px); }
+  #c020 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 200px,  100px, -250px); }
+  #c000 > span[data-surface="front"] { transform: rotateY(  0deg) translate3d(   0px,  200px,  150px); }
+  #c000 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d( 100px,  200px,   50px); }
+  #c000 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d(   0px,  100px, -250px); }
+  #c202 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(   0px,    0px,  150px); }
+  #c202 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(-100px,    0px,   50px); }
+  #c202 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d(   0px,  100px,  -50px); }
+  #c222 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d( 100px,    0px,  250px); }
+  #c222 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-200px,    0px,  150px); }
+  #c222 > span[data-surface="up"]    { transform: rotateX(270deg) translate3d( 200px,  100px,  -50px); }
+  #c220 > span[data-surface="right"] { transform: rotateY( 90deg) translate3d( 100px,  200px,  250px); }
+  #c220 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(-200px,  200px,  150px); }
+  #c220 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d( 200px, -100px, -250px); }
+  #c200 > span[data-surface="back"]  { transform: rotateY(180deg) translate3d(   0px,  200px,  150px); }
+  #c200 > span[data-surface="left"]  { transform: rotateY(270deg) translate3d(-100px,  200px,   50px); }
+  #c200 > span[data-surface="down"]  { transform: rotateX( 90deg) translate3d(   0px, -100px, -250px); }
+  </style>
+  <script type="text/javascript" src="/js/prefixfree.min.js"></script>
+  <script type="text/javascript" src="/js/projstech.min.js"></script>
+  <script type="text/javascript" src="/javascript/rubiksCube/ex02.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div id="control">
+      <div id="c111">
+      </div>
+      <div id="c101">
+        <span class="surface" data-surface="left"></span>
+      </div>
+      <div id="c112">
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c121">
+        <span class="surface" data-surface="right"></span>
+      </div>
+      <div id="c110">
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c011">
+        <span class="surface" data-surface="front"></span>
+      </div>
+      <div id="c211">
+        <span class="surface" data-surface="back"></span>
+      </div>
+      <div id="c021">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="right"></span>
+      </div>
+      <div id="c201">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="left"></span>
+      </div>
+      <div id="c221">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="back"></span>
+      </div>
+      <div id="c012">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c212">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c210">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c010">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c120">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c122">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c102">
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c100">
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c002">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c022">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c202">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c222">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="up"></span>
+      </div>
+      <div id="c220">
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c200">
+        <span class="surface" data-surface="back"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c000">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="left"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c020">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="right"></span>
+        <span class="surface" data-surface="down"></span>
+      </div>
+      <div id="c001">
+        <span class="surface" data-surface="front"></span>
+        <span class="surface" data-surface="left"></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
